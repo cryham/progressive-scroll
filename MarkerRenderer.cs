@@ -20,8 +20,8 @@ namespace ProgressiveScroll
 
 		public ColorSet Colors { get; set; }
 
-		private static readonly int markerStartOffset = -3;
-		private static readonly int markerEndOffset = 2;
+		private static readonly int markerStartOffset = -1;  //-3
+		private static readonly int markerEndOffset = 0;  //2
 
 		private static int _bookmarkType = 3;
 
