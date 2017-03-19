@@ -219,7 +219,7 @@ namespace ProgressiveScroll
 			UnsavedChangesBrush = (SolidColorBrush)resDict[EditorFormatDefinition.ForegroundBrushId];
 
 			resDict = _formatMap.GetProperties(FormatNames.Highlights);
-			HighlightsBrush = (SolidColorBrush)resDict[EditorFormatDefinition.BackgroundBrushId];
+            HighlightsBrush = (SolidColorBrush)resDict[EditorFormatDefinition.ForegroundBrushId];
 
 			resDict = _formatMap.GetProperties(FormatNames.Breakpoints);
 			BreakpointsBrush = (SolidColorBrush)resDict[EditorFormatDefinition.ForegroundBrushId];
