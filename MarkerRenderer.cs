@@ -132,9 +132,8 @@ namespace ProgressiveScroll
 					if (yBottom < y)
 					{
 						drawingContext.DrawRectangle(
-							brush,
-							null,
-							new Rect(x, yTop, markerWidth, yBottom - yTop));
+							brush, null,
+                            new Rect(x, yTop, markerWidth, yBottom - yTop));
 
 						yTop = y;
 					}
@@ -143,9 +142,8 @@ namespace ProgressiveScroll
 				}
 
 				drawingContext.DrawRectangle(
-					brush,
-					null,
-					new Rect(x, yTop, markerWidth, yBottom - yTop));
+					brush, null,
+                    new Rect(x, yTop, markerWidth, yBottom - yTop));
 			}
 		}
 	}

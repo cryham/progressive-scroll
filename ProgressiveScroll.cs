@@ -167,6 +167,9 @@ namespace ProgressiveScroll
 			}
 		}
 
+        private readonly double ySplitter = -17.0;
+        private readonly double yNoSplit = -0.0;
+
 		private void InitSettings()
 		{
 			ClipToBounds = true;
@@ -180,9 +183,9 @@ namespace ProgressiveScroll
 			_containerMargin.VisualElement.Margin =
 				new Thickness(
 					0.0,
-					(Options.SplitterEnabled || !_hasSplitter) ? 0.0 : -17.0,
+                    (Options.SplitterEnabled || !_hasSplitter) ? yNoSplit : ySplitter,
 					0.0,
-					Options.IsVS10 ? -17.0 : 0.0);
+                    Options.IsVS10 ? ySplitter : yNoSplit);
 
 			Width = Options.ScrollBarWidth;
 			_scrollBar.Width = Width;
@@ -197,9 +200,9 @@ namespace ProgressiveScroll
 			_containerMargin.VisualElement.Margin =
 				new Thickness(
 					0.0,
-					(Options.SplitterEnabled || !_hasSplitter) ? 0.0 : -17.0,
+                    (Options.SplitterEnabled || !_hasSplitter) ? yNoSplit : ySplitter,
 					0.0,
-					Options.IsVS10 ? -17.0 : 0.0);
+                    Options.IsVS10 ? ySplitter : yNoSplit);
 
 			Width = Options.ScrollBarWidth;
 			_scrollBar.Width = Width;
@@ -301,7 +304,7 @@ namespace ProgressiveScroll
 		private void Invalidate(Parts parts)
 		{
 			// Not visible anyway
-			if (ActualWidth <= 0.0 || ActualHeight <= 0)
+			if (ActualWidth <= 0.0 || ActualHeight <= 0.0)
 			{
 				return;
 			}

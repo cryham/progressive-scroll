@@ -34,6 +34,7 @@ namespace ProgressiveScroll
 		private int _bitmapStride;
 		private byte[] _bitmapPixels;
 
+        private readonly int _margin = 6;
         private int _width;
 		private int _height;
 		private int _stride;
@@ -148,7 +149,7 @@ namespace ProgressiveScroll
 
 			// Render the text bitmap with scaling
 			DrawingGroup drawingGroup = new DrawingGroup();
-			RenderOptions.SetBitmapScalingMode(drawingGroup, BitmapScalingMode.HighQuality);
+			RenderOptions.SetBitmapScalingMode(drawingGroup, BitmapScalingMode.HighQuality);  //Options, Fant?
 			ImageDrawing image = new ImageDrawing();
 			double textHeight = Math.Min(Height, _progressiveScroll.DrawHeight);
 			image.Rect = new Rect(0.0, 0.0, _progressiveScroll.ActualWidth, textHeight);
@@ -429,8 +430,9 @@ namespace ProgressiveScroll
 
 		private void SetPixel(int x, int y, Color c)
 		{
+            x += _margin;
 			y = (int)(y * _lineRatio);
-			if (x < _width && y < _height)
+			if (x < _width - _margin && y < _height)
 			{
 				int pixelOffset = y * _stride + x * 4;
 				_pixels[pixelOffset] = c.B;
