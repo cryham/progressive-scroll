@@ -20,6 +20,10 @@ namespace ProgressiveScroll
 		public const string SplitterEnabled = "SplitterEnabled";
 		public const string ErrorsEnabled = "ErrorsEnabled";
 		public const string AltHighlight = "AltHighlight";
+
+        public const string FindMarkSize = "FindMarkSize";
+        public const string FindMatchCase = "FindMatchCase";
+        public const string FindMatchWhole = "FindMatchWhole";
 	}
 
 	[ClassInterface(ClassInterfaceType.AutoDual)]
@@ -29,11 +33,16 @@ namespace ProgressiveScroll
 	{
 		private int _scrollBarWidth = 128;
 		private bool _renderTextEnabled = true;
-		private double _cursorOpacity = 0.125;
+		private double _cursorOpacity = 0.25;
 		private bool _cursorBorderEnabled = false;
 		private bool _splitterEnabled = false;
 		private bool _errorsEnabled = false;
 		private bool _altHighlight = false;
+
+        private int _FindMarkSize = 1;
+        private bool _FindMatchCase = true;
+        private bool _FindMatchWhole = true;
+
 
 		[Category("General")]
 		[DisplayName("Width")]
@@ -44,7 +53,7 @@ namespace ProgressiveScroll
 			set { _scrollBarWidth = Math.Min(Math.Max(value, 16), 512); }
 		}
 
-		[Category("General")]
+        [Category("General")]
 		[DisplayName("Display Code")]
 		[Description("Displays the code in the scrollbar.")]
 		public bool RenderTextEnabled
@@ -62,7 +71,7 @@ namespace ProgressiveScroll
 			set { _cursorOpacity = Math.Min(Math.Max(value, 0.0), 1.0); }
 		}
 
-		[Category("General")]
+        [Category("General")]
 		[DisplayName("Display Border")]
 		[Description("Displays a border around the visible region.")]
 		public bool CursorBorderEnabled
@@ -71,7 +80,7 @@ namespace ProgressiveScroll
 			set { _cursorBorderEnabled = value; }
 		}
 
-		[Category("General")]
+        [Category("General")]
 		[DisplayName("Display Splitter")]
 		[Description("Displays the splitter control.")]
 		public bool SplitterEnabled
@@ -80,7 +89,7 @@ namespace ProgressiveScroll
 			set { _splitterEnabled = value; }
 		}
 
-		[Category("General")]
+        [Category("General")]
 		[DisplayName("Display Error Marks")]
 		[Description("Displays marks for errors in the scrollbar.")]
 		public bool ErrorsEnabled
@@ -98,7 +107,36 @@ namespace ProgressiveScroll
 			set { _altHighlight = value; }
 		}
 
-		protected override void OnApply(PageApplyEventArgs e)
+
+        [Category("General")]
+        [DisplayName("Find mark size")]
+        [Description("Size of find mark occurrences.")]
+        public int FindMarkSize
+        {
+            get { return _FindMarkSize; }
+            set { _FindMarkSize = value; }
+        }
+
+        [Category("General")]
+        [DisplayName("Find case sensitive")]
+        [Description("Find will be case sensitive.")]
+        public bool FindMatchCase
+        {
+            get { return _FindMatchCase; }
+            set { _FindMatchCase = value; }
+        }
+
+        [Category("General")]
+        [DisplayName("Find whole word")]
+        [Description("Find will match whole words only.")]
+        public bool FindMatchWhole
+        {
+            get { return _FindMatchWhole; }
+            set { _FindMatchWhole = value; }
+        }
+
+
+        protected override void OnApply(PageApplyEventArgs e)
 		{
 			base.OnApply(e);
 
@@ -113,6 +151,10 @@ namespace ProgressiveScroll
 				Options.SplitterEnabled = _splitterEnabled;
 				Options.ErrorsEnabled = _errorsEnabled;
 				Options.AltHighlight = _altHighlight;
+                
+                Options.FindMarkSize = _FindMarkSize;
+                Options.FindMatchCase = _FindMatchCase;
+                Options.FindMatchWhole = _FindMatchWhole;
 
 				ProgressiveScroll.SettingsChanged();
 			}
@@ -128,12 +170,16 @@ namespace ProgressiveScroll
 	{
 		public static bool IsVS10;
 		public static int ScrollBarWidth;
-		public static bool RenderTextEnabled;
+        public static bool RenderTextEnabled;
 		public static double CursorOpacity;
 		public static bool CursorBorderEnabled;
 		public static bool SplitterEnabled;
 		public static bool ErrorsEnabled;
 		public static bool AltHighlight;
+        
+        public static int FindMarkSize;
+        public static bool FindMatchCase;
+        public static bool FindMatchWhole;
 
 		protected override void Initialize()
 		{
@@ -145,12 +191,16 @@ namespace ProgressiveScroll
 			EnvDTE.Properties props = dte.get_Properties(OptionNames.PageCategoryName, OptionNames.PageName);
 
 			ScrollBarWidth = (int)props.Item(OptionNames.ScrollBarWidth).Value;
-			RenderTextEnabled = (bool)props.Item(OptionNames.RenderTextEnabled).Value;
+            RenderTextEnabled = (bool)props.Item(OptionNames.RenderTextEnabled).Value;
 			CursorOpacity = (double)props.Item(OptionNames.CursorOpacity).Value;
 			CursorBorderEnabled = (bool)props.Item(OptionNames.CursorBorderEnabled).Value;
 			SplitterEnabled = (bool)props.Item(OptionNames.SplitterEnabled).Value;
 			ErrorsEnabled = (bool)props.Item(OptionNames.ErrorsEnabled).Value;
 			AltHighlight = (bool)props.Item(OptionNames.AltHighlight).Value;
-		}
+
+            FindMarkSize = (int)props.Item(OptionNames.FindMarkSize).Value;
+            FindMatchCase = (bool)props.Item(OptionNames.FindMatchCase).Value;
+            FindMatchWhole = (bool)props.Item(OptionNames.FindMatchWhole).Value;
+        }
 	}
 }

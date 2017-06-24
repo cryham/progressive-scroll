@@ -17,9 +17,10 @@ namespace ProgressiveScroll
 
 		public ColorSet Colors { get; set; }
 
-		private static readonly int markerWidth = 5;
-		private static readonly int markerStartOffset = -3;
-		private static readonly int markerEndOffset = 2;
+        private static readonly int markerRight = 5;
+        private static readonly int markerWidth = 3;  // 5
+		private static readonly int markerStartOffset = -1;  // -3
+		private static readonly int markerEndOffset = -0;  // 2
 
 
 		public HighlightRenderer(ITextView textView, SimpleScrollBar scrollBar)
@@ -47,8 +48,10 @@ namespace ProgressiveScroll
 
 			if (highlights.Count > 0)
 			{
-				double yTop = Math.Floor(_scrollBar.GetYCoordinateOfBufferPosition(highlights[0].Start)) + markerStartOffset;
-				double yBottom = Math.Ceiling(_scrollBar.GetYCoordinateOfBufferPosition(highlights[0].End)) + markerEndOffset;
+                double yMark = 1/*Options.FindMarkSize*/ * 0.5;
+                double yTop = Math.Floor(_scrollBar.GetYCoordinateOfBufferPosition(highlights[0].Start)) + markerStartOffset - yMark;
+                double yBottom = Math.Ceiling(_scrollBar.GetYCoordinateOfBufferPosition(highlights[0].End)) + markerEndOffset + yMark;
+                double x = _scrollBar.Width - markerRight;
 
 				for (int i = 1; i < highlights.Count; ++i)
 				{
@@ -56,22 +59,19 @@ namespace ProgressiveScroll
 					if (yBottom < y)
 					{
 						drawingContext.DrawRectangle(
-							Colors.HighlightsBrush,
-							null,
-							new Rect(_scrollBar.Width - markerWidth, yTop, markerWidth, yBottom - yTop));
+							Colors.HighlightsBrush, null,
+                            new Rect(x, yTop, markerWidth, yBottom - yTop));
 
 						yTop = y;
 					}
 
-					yBottom = Math.Ceiling(_scrollBar.GetYCoordinateOfBufferPosition(highlights[i].End)) + markerEndOffset;
+                    yBottom = Math.Ceiling(_scrollBar.GetYCoordinateOfBufferPosition(highlights[i].End)) + markerEndOffset + yMark;
 				}
 
 				drawingContext.DrawRectangle(
-					Colors.HighlightsBrush,
-					null,
-					new Rect(_scrollBar.Width - markerWidth, yTop, markerWidth, yBottom - yTop));
+					Colors.HighlightsBrush, null,
+                    new Rect(x, yTop, markerWidth, yBottom - yTop));
 			}
 		}
-
 	}
 }
