@@ -20,8 +20,8 @@ namespace ProgressiveScroll
 		public ColorSet Colors { get; set; }
 
 		private static readonly int markerWidth = 3;
-		private static readonly int markerStartOffset = -2;
-		private static readonly int markerEndOffset = 2;
+		private static readonly int markerStartOffset = -1;
+		private static readonly int markerEndOffset = 1;
 
 
 		public ChangeRenderer(ITextView textView, ITagAggregator<ChangeTag> changeTagAggregator, SimpleScrollBar scrollBar)
@@ -78,8 +78,7 @@ namespace ProgressiveScroll
 					if (yBottom < y)
 					{
 						drawingContext.DrawRectangle(
-							brush,
-							null,
+							brush, null,
 							new Rect(0, yTop, markerWidth, yBottom - yTop));
 
 						yTop = y;
@@ -89,8 +88,7 @@ namespace ProgressiveScroll
 				}
 
 				drawingContext.DrawRectangle(
-					brush,
-					null,
+					brush, null,
 					new Rect(0, yTop, markerWidth, yBottom - yTop));
 			}
 		}
