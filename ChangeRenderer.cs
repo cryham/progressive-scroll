@@ -21,7 +21,7 @@ namespace ProgressiveScroll
 
 		private static readonly int markerWidth = 3;
 		private static readonly int markerStartOffset = -1;
-		private static readonly int markerEndOffset = 1;
+		private static readonly int markerEndOffset = 0;
 
 
 		public ChangeRenderer(ITextView textView, ITagAggregator<ChangeTag> changeTagAggregator, SimpleScrollBar scrollBar)

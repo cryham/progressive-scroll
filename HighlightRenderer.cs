@@ -17,10 +17,10 @@ namespace ProgressiveScroll
 
 		public ColorSet Colors { get; set; }
 
-        private static readonly int markerRight = 5;
+        private static readonly int markerRight = 6;
         private static readonly int markerWidth = 3;  // 5
 		private static readonly int markerStartOffset = -1;  // -3
-		private static readonly int markerEndOffset = -0;  // 2
+		private static readonly int markerEndOffset = 0;  // 2
 
 
 		public HighlightRenderer(ITextView textView, SimpleScrollBar scrollBar)
@@ -48,7 +48,7 @@ namespace ProgressiveScroll
 
 			if (highlights.Count > 0)
 			{
-                double yMark = 1/*Options.FindMarkSize*/ * 0.5;
+                double yMark = Options.FindMarkSize * 0.5;
                 double yTop = Math.Floor(_scrollBar.GetYCoordinateOfBufferPosition(highlights[0].Start)) + markerStartOffset - yMark;
                 double yBottom = Math.Ceiling(_scrollBar.GetYCoordinateOfBufferPosition(highlights[0].End)) + markerEndOffset + yMark;
                 double x = _scrollBar.Width - markerRight;

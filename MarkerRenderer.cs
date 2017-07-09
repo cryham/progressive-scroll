@@ -53,16 +53,20 @@ namespace ProgressiveScroll
 
 		public void Render(DrawingContext drawingContext)
 		{
+            //rest in:
+            //ChangeRenderer.cs
+            //HighlightRenderer.cs
+
 			NormalizedSnapshotSpanCollection bookmarks = GetBookmarks();
-			DrawMarkers(drawingContext, bookmarks, Colors.BookmarksBrush, -1, 3);
+			DrawMarkers(drawingContext, bookmarks, Colors.BookmarksBrush, true, 0, 3);
 
 			NormalizedSnapshotSpanCollection breakpoints = GetBreakpoints();
-			DrawMarkers(drawingContext, breakpoints, Colors.BreakpointsBrush, 1, 3);
+			DrawMarkers(drawingContext, breakpoints, Colors.BreakpointsBrush, false, 3, 3);
 
 			if (Options.ErrorsEnabled)
 			{
 				NormalizedSnapshotSpanCollection errors = GetErrors();
-				DrawMarkers(drawingContext, errors, Colors.ErrorsBrush, -4, 3);
+				DrawMarkers(drawingContext, errors, Colors.ErrorsBrush, true, -3, 3);
 			}
 		}
 
@@ -118,13 +122,13 @@ namespace ProgressiveScroll
 			return new NormalizedSnapshotSpanCollection(unnormalizederrors);
 		}
 
-		private void DrawMarkers(DrawingContext drawingContext, NormalizedSnapshotSpanCollection markers, Brush brush, short xOfs, short markerWidth)
+        private void DrawMarkers(DrawingContext drawingContext, NormalizedSnapshotSpanCollection markers, Brush brush, bool right, short xOfs, short markerWidth)
 		{
 			if (markers.Count > 0)
 			{
 				double yTop = Math.Floor(_scrollBar.GetYCoordinateOfBufferPosition(markers[0].Start)) + markerStartOffset;
 				double yBottom = Math.Ceiling(_scrollBar.GetYCoordinateOfBufferPosition(markers[0].End)) + markerEndOffset;
-                double x = xOfs < 0 ? _scrollBar.Width - markerWidth + xOfs : xOfs;
+                double x = right ? _scrollBar.Width - markerWidth + xOfs : xOfs;
 
 				for (int i = 1; i < markers.Count; ++i)
 				{
